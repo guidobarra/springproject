@@ -1,0 +1,83 @@
+Para beneficio de otros, presentaré a continuación lo que he reunido de mis investigaciones:
+
+Siempre que el bean prototipo no contenga una referencia a otro recurso, como una conexión de base de datos o un objeto de sesión, 
+se recolectará basura tan pronto como se eliminen todas las referencias al objeto o el objeto quede fuera de alcance. Por lo tanto, 
+generalmente no es necesario destruir explícitamente un bean prototipo.
+
+Sin embargo, en el caso de que pueda producirse una pérdida de memoria como se describió anteriormente, los beans prototipo pueden 
+destruirse creando un postprocesador de bean singleton cuyo método de destrucción llama explícitamente a los ganchos de destrucción 
+de sus beans prototipo. Debido a que el post-procesador es en sí misma de alcance singleton, su gancho destrucción será conseguir invocado por resorte:
+
+Cree un postprocesador de beans para manejar la destrucción de todos sus beans prototipo. Esto es necesario porque Spring no destruye 
+los prototipos de beans, por lo que el contenedor nunca llamará a los ganchos de @PreDestroy en su código.
+
+Implemente las siguientes interfaces:
+
+1. BeanFactoryAware
+Esta interfaz proporciona un método de devolución de llamada que recibe un objeto Beanfactory. Este objeto BeanFactory se usa en la clase 
+de postprocesador para identificar todos los beans prototipo a través de su método BeanFactory.isPrototype (String beanName).
+
+2. DisposableBean
+Esta interfaz proporciona un método de devolución de llamada Destroy () invocado por el contenedor Spring. Llamaremos a los métodos Destroy () 
+de todos nuestros prototipos de beans desde este método.
+
+3. BeanPostProcessor La
+implementación de esta interfaz proporciona acceso a las devoluciones de llamada posteriores al proceso desde dentro de las cuales preparamos 
+una Lista interna <> de todos los objetos prototipo instanciados por el contenedor Spring. Más adelante recorreremos esta Lista <> para 
+destruir cada uno de nuestros prototipos de beans.
+
+
+3. Finalmente implemente la interfaz DisposableBean en cada uno de sus beans prototipo, proporcionando el método Destroy () requerido por este contrato.
+
+
+
+
+
+
+/**
+* Bean PostProcessor that handles destruction of prototype beans
+*/
+@Component
+public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, BeanFactoryAware, DisposableBean {
+
+    private BeanFactory beanFactory;
+
+    private final List<Object> prototypeBeans = new LinkedList<>();
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (beanFactory.isPrototype(beanName)) {
+            synchronized (prototypeBeans) {
+                prototypeBeans.add(bean);
+            }
+        }
+        return bean;
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        synchronized (prototypeBeans) {
+            for (Object bean : prototypeBeans) {
+                if (bean instanceof DisposableBean) {
+                    DisposableBean disposable = (DisposableBean)bean;
+                    try {
+                        disposable.destroy();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            prototypeBeans.clear();
+        }
+    }
+}
