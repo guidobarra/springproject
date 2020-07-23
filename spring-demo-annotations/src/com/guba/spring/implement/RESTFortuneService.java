@@ -1,6 +1,8 @@
-package com.guba.spring;
+package com.guba.spring.implement;
 
 import org.springframework.stereotype.Component;
+
+import com.guba.spring.interfaces.FortuneService;
 
 @Component
 public class RESTFortuneService implements FortuneService {

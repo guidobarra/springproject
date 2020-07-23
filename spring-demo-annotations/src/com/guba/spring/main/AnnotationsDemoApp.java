@@ -1,6 +1,8 @@
-package com.guba.spring;
+package com.guba.spring.main;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.guba.spring.interfaces.Coach;
 
 public class AnnotationsDemoApp {
 

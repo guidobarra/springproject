@@ -1,4 +1,4 @@
-package com.guba.spring;
+package com.guba.spring.interfaces;
 
 public interface FortuneService {
 

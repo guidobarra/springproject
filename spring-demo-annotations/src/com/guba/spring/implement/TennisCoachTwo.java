@@ -1,8 +1,11 @@
-package com.guba.spring;
+package com.guba.spring.implement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import com.guba.spring.interfaces.Coach;
+import com.guba.spring.interfaces.FortuneService;
 
 @Component("thatSillyCoach")
 public class TennisCoachTwo implements Coach {
