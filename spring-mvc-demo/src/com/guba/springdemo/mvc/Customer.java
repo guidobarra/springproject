@@ -1,6 +1,9 @@
 package com.guba.springdemo.mvc;
 
 import javax.validation.constraints.Size;
+
+import com.guba.springdemo.mvc.validation.CourseCode;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -23,6 +26,9 @@ public class Customer {
 	@NotNull(message="is required")
 	@Pattern(regexp="^[a-zA-Z0-9]{5}", message="only 5 chars/digits")
 	private String postalCode;
+	
+	@CourseCode(value="GUBA", message="must start with GUBA")
+	private String courseCode;
 
 	public String getFirstName() {
 		return firstName;
@@ -55,6 +61,13 @@ public class Customer {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-	
+
+	public String getCourseCode() {
+		return courseCode;
+	}
+
+	public void setCourseCode(String courseCode) {
+		this.courseCode = courseCode;
+	}
 	
 }
