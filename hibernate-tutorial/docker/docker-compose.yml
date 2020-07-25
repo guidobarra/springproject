@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  mysql-legacy:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: hbstudent
+      MYSQL_DATABASE: hb_student_tracker
+      MYSQL_USER: hbstudent
+      MYSQL_PASSWORD: hbstudent
+    ports:
+      - "3309:3306"
+    volumes:
+      - "./my.conf:/etc/mysql/conf.d/config-file.cnf"
+      - "./data:/var/lib/mysql:rw"
+
+  admin:
+    image: adminer
+    ports:
+      - 8090:8080

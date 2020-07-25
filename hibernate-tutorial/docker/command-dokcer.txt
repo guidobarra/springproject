@@ -1,0 +1,27 @@
+Run services
+
+cd ./hibernate-tutorial/docker
+mkdir data
+docker-compose up
+
+# on new terminal tab
+cd ./hibernate-tutorial/docker
+docker-compose ps
+
+
+
+Test connection - multiple options
+
+docker-compose exec mysql-dev mysql -uroot -ppassword blogapp
+docker-compose exec mysql-legacy mysql -uroot -ppassword legacyapp
+docker-compose exec pgdb psql -U root -W blogapp
+
+
+A few useful commands
+cd ./hibernate-tutorial/docker
+docker-compose stop
+docker-compose rm
+docker-compose rm -f
+
+
+Admin database, browser "http://localhost:8090/"
