@@ -25,7 +25,7 @@ public class DeleteOnlyPhoneByClientDemo {
 
 			// start a transaction
 			session.beginTransaction();
-s
+
 			// get instructor by primary key / id
 			int theId = 1;
 			Client client = session.get(Client.class, theId);
