@@ -1,13 +1,14 @@
-package com.guba.hibernate.crud.onetomany;
+package com.guba.hibernate.crud.onetomany.unidirectional;
 
 import com.guba.hibernate.entity.Course;
 import com.guba.hibernate.entity.Instructor;
 import com.guba.hibernate.entity.InstructorDetail;
+import com.guba.hibernate.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class GetInstructorCourseDemo {
+public class DeleteCourseAndReviewDemo {
 
 	public static void main(String[] args) {
 		// create session factory
@@ -16,25 +17,27 @@ public class GetInstructorCourseDemo {
 								 .addAnnotatedClass(InstructorDetail.class)
 								 .addAnnotatedClass(Instructor.class)
 								 .addAnnotatedClass(Course.class)
+								 .addAnnotatedClass(Review.class)
 								 .buildSessionFactory();
 		
 		// create session
 		Session session = factory.getCurrentSession();
 		
 		try {
-
 			// start a transaction
 			session.beginTransaction();
 
-			// get the instructor from db
-			int theId = 2;
-			Instructor instructorGet = session.get(Instructor.class, theId);
+			// get the course
+			int theId = 10;
+			Course courseDelete = session.get(Course.class, theId);
 
-			// get the instructor
-			System.out.println("Get the Instructor: " + instructorGet);
+			// print the course
+			System.out.println("Deleting Course: " + theId);
 
-			// get the Course
-			System.out.println("Associate the Course: " + instructorGet.getCourses());
+			// print the course reviews
+			System.out.println("Deleting Reviews associated: " + courseDelete.getReviews());
+
+			session.delete(courseDelete);
 
 			// commit transaction
 			session.getTransaction().commit();

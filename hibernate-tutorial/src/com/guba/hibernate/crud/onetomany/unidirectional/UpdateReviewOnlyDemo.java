@@ -1,13 +1,14 @@
-package com.guba.hibernate.crud.onetomany;
+package com.guba.hibernate.crud.onetomany.unidirectional;
 
 import com.guba.hibernate.entity.Course;
 import com.guba.hibernate.entity.Instructor;
 import com.guba.hibernate.entity.InstructorDetail;
+import com.guba.hibernate.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class CreateCourseByInstructorDemo {
+public class UpdateReviewOnlyDemo {
 
 	public static void main(String[] args) {
 		// create session factory
@@ -16,34 +17,35 @@ public class CreateCourseByInstructorDemo {
 								 .addAnnotatedClass(InstructorDetail.class)
 								 .addAnnotatedClass(Instructor.class)
 								 .addAnnotatedClass(Course.class)
+								 .addAnnotatedClass(Review.class)
 								 .buildSessionFactory();
-		
+
 		// create session
 		Session session = factory.getCurrentSession();
-		
-		try {
 
+		try {
 			// start a transaction
 			session.beginTransaction();
 
-			// get the instructor from db
-			int theId = 1;
-			Instructor instructorSave = session.get(Instructor.class, theId);
+			// get the course
+			int theId = 11;
+			Course courseUpdate = session.get(Course.class, theId);
 
-			// create some Courses
-			Course tempCourseOne = new Course("Python with Django and Flask");
-			Course tempCourseTwo = new Course("Go basic for beginner");
+			// print the course
+			System.out.println("get Course: " + courseUpdate);
 
-			// add courses to instructor
-			instructorSave.add(tempCourseOne);
-			instructorSave.add(tempCourseTwo);
+			// print the course reviews
+			System.out.println("get Reviews associated: " + courseUpdate.getReviews());
 
+			if (!courseUpdate.getReviews().isEmpty()) {
+				courseUpdate.getReviews().get(1).setComment("Very Basic");
+			}
 
-			// save the courses object
-			System.out.println("Saving the Courses");
-			session.save(tempCourseOne);
-			session.save(tempCourseTwo);
-			
+			// print the course reviews
+			System.out.println("Update Reviews associated: " + courseUpdate.getReviews());
+
+			session.save(courseUpdate);
+
 			// commit transaction
 			session.getTransaction().commit();
 			System.out.println("Done!");

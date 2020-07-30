@@ -1,13 +1,14 @@
-package com.guba.hibernate.crud.onetomany;
+package com.guba.hibernate.crud.onetomany.unidirectional;
 
 import com.guba.hibernate.entity.Course;
 import com.guba.hibernate.entity.Instructor;
 import com.guba.hibernate.entity.InstructorDetail;
+import com.guba.hibernate.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class DeleteInstructorCourseDemo {
+public class UpdateCourseAndReviewDemo {
 
 	public static void main(String[] args) {
 		// create session factory
@@ -16,24 +17,37 @@ public class DeleteInstructorCourseDemo {
 								 .addAnnotatedClass(InstructorDetail.class)
 								 .addAnnotatedClass(Instructor.class)
 								 .addAnnotatedClass(Course.class)
+								 .addAnnotatedClass(Review.class)
 								 .buildSessionFactory();
 		
 		// create session
 		Session session = factory.getCurrentSession();
 		
 		try {
-
 			// start a transaction
 			session.beginTransaction();
 
-			// get the instructor from db
-			int theId = 10;
-			Course courseDelete = session.get(Course.class, theId);
+			// get the course
+			int theId = 11;
+			Course courseUpdate = session.get(Course.class, theId);
 
-			// delete the Course
-			System.out.println("Delete the Course: " + courseDelete);
+			// print the course
+			System.out.println("get Course: " + courseUpdate);
 
-			session.delete(courseDelete);
+			// print the course reviews
+			System.out.println("get Reviews associated: " + courseUpdate.getReviews());
+
+			courseUpdate.setTitle("Reactive Native");
+			// print the course
+			System.out.println("Update Course: " + courseUpdate);
+
+			if (!courseUpdate.getReviews().isEmpty()) {
+				courseUpdate.getReviews().get(0).setComment("Regular Basic");
+			}
+			// print the course reviews
+			System.out.println("Update Reviews associated: " + courseUpdate.getReviews());
+
+			session.save(courseUpdate);
 
 			// commit transaction
 			session.getTransaction().commit();

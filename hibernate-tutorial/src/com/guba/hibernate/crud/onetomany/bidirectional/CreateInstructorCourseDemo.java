@@ -1,4 +1,4 @@
-package com.guba.hibernate.crud.onetomany;
+package com.guba.hibernate.crud.onetomany.bidirectional;
 
 import com.guba.hibernate.entity.Course;
 import com.guba.hibernate.entity.Instructor;

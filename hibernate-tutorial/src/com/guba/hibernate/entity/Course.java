@@ -1,6 +1,8 @@
 package com.guba.hibernate.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="course")
@@ -20,6 +22,11 @@ public class Course {
                           CascadeType.REFRESH})
     @JoinColumn(name="instructor_id")
     private Instructor instructor;
+
+    //one-directional, if deleting Course also Deleting Reviews
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="course_id")
+    private List<Review> reviews;
 
     public Course() {
 
@@ -41,6 +48,10 @@ public class Course {
         return instructor;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -53,12 +64,24 @@ public class Course {
         this.instructor = instructor;
     }
 
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void add(Review review) {
+
+        if (reviews == null) {
+            reviews = new ArrayList<>();
+        }
+
+        reviews.add(review);
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", instructor_id=" + instructor.getId() +
                 '}';
     }
 }
