@@ -1,6 +1,8 @@
 package com.guba.hibernate.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="instructor")
@@ -28,6 +30,37 @@ public class Instructor {
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="instructor_detail_id")
     private InstructorDetail instructorDetail;
+
+// When we fetch / retrieve data, should we retrieve EVERYTHING?
+// Eager will retrieve everything
+//      Eager loading will load all dependent entities
+//      Load instructor and all of their courses at one
+// Lazy will retrieve on request
+//      Lazy loading will load the main entity first
+//      Load dependent entities on demand (Lazy)
+
+// Conclusion: Lazy loading is preferred, load on demand (lazy), Because if we have
+// register 50.000 of student relationships with course, we context application java
+// would have register 50.000 of student and we don't really need that information
+
+// Best Practice
+// Only load data when absolutely needed, Prefer Lazy loading instead of Eager loading
+
+// Note: To retrieve lazy data, you will need to open a Hibernate session
+// Retrieve lazy data using
+//          option 1: session.get and call appropriate getter method/s
+//          option 2: Hibernate query with HQL
+
+    // look at the instructor property in the Course class
+    // Use information from the Course class @JoinColumn
+    // To help find associated course for instructor
+    @OneToMany(fetch=FetchType.LAZY,
+               mappedBy="instructor",
+               cascade={CascadeType.DETACH,
+                        CascadeType.MERGE,
+                        CascadeType.PERSIST,
+                        CascadeType.REFRESH})
+    private List<Course> courses;
 
     public Instructor(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -59,6 +92,11 @@ public class Instructor {
         return instructorDetail;
     }
 
+    // with LAZY call db
+    public List<Course> getCourses() {
+        return courses;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -79,6 +117,21 @@ public class Instructor {
         this.instructorDetail = instructorDetail;
     }
 
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    // add convenience methods for bi-directional relationship
+    public void add(Course theCourse) {
+        if (this.courses == null) {
+            this.courses = new ArrayList<>();
+        }
+
+        // Bi-directional link
+        courses.add(theCourse);
+        theCourse.setInstructor(this);
+    }
+
     @Override
     public String toString() {
         return "Instructor{" +
@@ -87,6 +140,7 @@ public class Instructor {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", instructorDetail=" + instructorDetail +
+                //", courses=" + courses + // with LAZY call db
                 '}';
     }
 }
