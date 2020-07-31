@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/hibernate-tutorial/.idea/sonarlint/issuestore
+/hibernate-tutorial/hibernate-tutorial.iml
+/hibernate-tutorial/scritp_sql/hb-02-one-to-one-bi
