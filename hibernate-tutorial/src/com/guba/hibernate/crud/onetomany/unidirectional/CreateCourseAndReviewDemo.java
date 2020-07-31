@@ -31,9 +31,9 @@ public class CreateCourseAndReviewDemo {
 			Course tempCourse = new Course("Angular 8");
 
 			// create some Review
-			tempCourse.add(new Review("Great course ... loved it!"));
-			tempCourse.add(new Review("Cool course, job well done"));
-			tempCourse.add(new Review("Great course ... loved it!"));
+			tempCourse.addReview(new Review("Great course ... loved it!"));
+			tempCourse.addReview(new Review("Cool course, job well done"));
+			tempCourse.addReview(new Review("Great course ... loved it!"));
 
 			// save the course ... and leverage the cascade all :-)
 			System.out.println("Saving the course");
