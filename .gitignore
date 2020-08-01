@@ -37,3 +37,4 @@ hs_err_pid*
 /hibernate-tutorial/.project
 /hibernate-tutorial/bin/hibernate.cfg.xml
 /hibernate-tutorial/docker/data*
+/hibernate-tutorial/.gitignore
