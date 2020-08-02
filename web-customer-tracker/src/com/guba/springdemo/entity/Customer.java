@@ -16,7 +16,7 @@ public class Customer {
 	@Id
 	@NotNull
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name = "first_name")

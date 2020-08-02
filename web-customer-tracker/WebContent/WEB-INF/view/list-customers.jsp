@@ -28,6 +28,13 @@
 	<div id="container">
 		<div id="content">
 		
+			<!-- put new button: Add Customer -->
+			<input 
+				type="buttom" value="Add Customer"
+				onclick="window.location.href='showFromForAdd'; return false;"
+				class="add-button"
+			/>	
+		
 			<!-- add our html table here -->
 			<table>
 				<tr>
