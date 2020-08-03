@@ -62,8 +62,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public void deleteCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
 		
+		// deleting customer
+		currentSession.delete(customer);
 	}
 
 }
