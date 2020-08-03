@@ -8,7 +8,7 @@ public interface CustomerService {
 
 	public void saveCustomer(Customer customer);
 	
-	public Customer getCustomer();
+	public Customer getCustomer(int theId);
 	
 	public List<Customer> getCustomers();
 	
