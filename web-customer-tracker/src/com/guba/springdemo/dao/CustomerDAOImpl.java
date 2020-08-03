@@ -55,12 +55,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public void updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void deleteCustomer(Customer customer) {
 
 		// get the current hibernate session
@@ -69,5 +63,31 @@ public class CustomerDAOImpl implements CustomerDAO {
 		// deleting customer
 		currentSession.delete(customer);
 	}
+
+	@Override
+	public List<Customer> searchCustomers(String theSearchName) {
+		
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// create a query ... sort by last name
+		Query<Customer> theQuery = 
+				currentSession.createQuery("from Customer", Customer.class);
+		// only search by name if theSearchName is not empty
+        if (theSearchName != null && theSearchName.trim().length() > 0) {
+
+            // search for firstName or lastName ... case insensitive
+            theQuery = currentSession.createQuery("from Customer where lower(firstName) like :theName or lower(lastName) like :theName", Customer.class);
+            theQuery.setParameter("theName", "%" + theSearchName.toLowerCase() + "%");
+
+        }
+		// execute query and get result list
+		List<Customer> customersResult = theQuery.getResultList();
+		
+		// return the results
+		return customersResult;
+	}
+	
+	
 
 }
