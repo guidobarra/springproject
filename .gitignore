@@ -1,0 +1,39 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+#*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+#maven
+*/target
+
+/spring-demo-aop/.settings
+/spring-demo-aop/.idea
+/spring-demo-aop/.classpath
+/spring-demo-aop/.project
+/spring-demo-aop/web-customer-tracker.iml
+/spring-demo-aop/build/classes/.gitignore
+/spring-demo-aop/out/production/spring-demo-aop/META-INF/spring-demo-aop.kotlin_module
+/spring-demo-aop/spring-demo-aop.iml
