@@ -31,4 +31,11 @@ public class MyDemoLoggingAspect {
     public void beforeAddAccountAdviceTree() {
         System.out.println("\n=====> Executing @Before advice on addAccount() Tree");
     }
+
+    // For methods that start name add and have the first parameter Account and have more one parameter
+    // parameter has to be absolute example "com.guba.springaop.domain.Account", no relative example "*Account"
+    @Before("execution(* add*(com.guba.springaop.domain.Account, ..))")
+    public void beforeAddAccountAdviceFour() {
+        System.out.println("\n=====> Executing @Before advice on addAccount() Four");
+    }
 }
