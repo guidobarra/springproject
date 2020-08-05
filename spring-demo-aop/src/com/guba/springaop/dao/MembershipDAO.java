@@ -12,4 +12,9 @@ public class MembershipDAO {
     public void addSillyMember() {
         System.out.println(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP Silly\n");
     }
+
+    public boolean addThingMember() {
+        System.out.println(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP ThingMember\n");
+        return false;
+    }
 }

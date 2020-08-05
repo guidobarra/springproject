@@ -9,4 +9,8 @@ public class AccountDAO {
         System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN ACCOUNT\n");
     }
 
+    public String addAccountString() {
+        System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN addAccountString\n");
+        return "GUBA";
+    }
 }

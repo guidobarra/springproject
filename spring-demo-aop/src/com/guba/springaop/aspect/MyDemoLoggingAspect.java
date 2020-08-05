@@ -22,6 +22,13 @@ public class MyDemoLoggingAspect {
     // For methods that start name with add
     @Before("execution(public void add*())")
     public void beforeAddAccountAdviceTwo() {
-        System.out.println("\n=====> Executing @Before advice on addAccount()");
+        System.out.println("\n=====> Executing @Before advice on addAccount() Two");
+    }
+
+    // For methods that return void and start name add
+    // equals "void add*()" === "* void add*()"
+    @Before("execution(boolean add*())")
+    public void beforeAddAccountAdviceTree() {
+        System.out.println("\n=====> Executing @Before advice on addAccount() Tree");
     }
 }
