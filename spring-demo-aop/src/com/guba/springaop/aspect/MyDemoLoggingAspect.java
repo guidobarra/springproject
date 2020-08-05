@@ -2,6 +2,7 @@ package com.guba.springaop.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 // Spring AOP using to AspectJ
@@ -36,6 +37,15 @@ public class MyDemoLoggingAspect {
     // parameter has to be absolute example "com.guba.springaop.domain.Account", no relative example "*Account"
     @Before("execution(* add*(com.guba.springaop.domain.Account, ..))")
     public void beforeAddAccountAdviceFour() {
+        System.out.println("\n=====> Executing @Before advice on addAccount() Four");
+    }
+
+    //
+    @Pointcut("execution(* com.guba.springaop.service.*.*(..))")
+    private void forServicePackage(){}
+
+    @Before("com.guba.springaop.aspect.MyDemoLoggingAspect.forServicePackage()")
+    public void beforeAddAccountAdviceFive() {
         System.out.println("\n=====> Executing @Before advice on addAccount() Four");
     }
 }
