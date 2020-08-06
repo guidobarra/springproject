@@ -5,7 +5,7 @@ import com.guba.springaop.dao.AccountDAO;
 import com.guba.springaop.dao.MembershipDAO;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class StartNameMethodWithAddApp {
+public class OnlyMethodAddAccountOfAccountDAO {
 
     public static void main(String[] args) {
 
@@ -24,13 +24,18 @@ public class StartNameMethodWithAddApp {
 
         System.out.println("\n let's call it again!\n");
 
-        // call the business method of membershipDAO
-        theMembershipDAO.addAccount();
+        // call the business method of accountDAO again
+        theAccountDAO.addAccount();
 
         System.out.println("\n let's call it again!\n");
 
+        // call the business method of membershipDAO
+        theMembershipDAO.addAccount();
+
+        System.out.println("\n let's  no call it again!\n");
+
         // call the business method of membershipDAO again
-        theMembershipDAO.addSillyMember();
+        theMembershipDAO.addAccount();
 
         // close the context
         context.close();

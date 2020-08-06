@@ -18,4 +18,12 @@ public class AccountDAO {
     public void addAccountParameter(Account account, boolean b) {
         System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN addAccountParameter\n");
     }
+
+    public void filterAccountDAO() {
+        System.out.println(getClass() + ": DOING MY DB WORK: filterAccountDAO\n");
+    }
+
+    public void noCallMethodsAspect() {
+        System.out.println("\n\n" + getClass() + ": DOING MY DB WORK: noCallMethodsAspect\n");
+    }
 }

@@ -21,13 +21,13 @@ public class MyDemoLoggingAspect {
     }
 
     // For methods that start name with add
-    @Before("execution(public void add*())")
-    public void beforeAddAccountAdviceTwo() {
-        System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceTwo");
+    @Before("execution(public void filter*())")
+    public void beforeFilterAdvice() {
+        System.out.println("\n=====> Executing @Before advice on beforeFilterAdvice");
     }
 
-    // For methods that return void and start name add
-    // equals "void add*()" === "* void add*()"
+    // For methods that return boolean and start name add
+    // equals "boolean add*()" === "* boolean add*()"
     @Before("execution(boolean add*())")
     public void beforeAddAccountAdviceTree() {
         System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceTree");
@@ -39,6 +39,10 @@ public class MyDemoLoggingAspect {
     public void beforeAddAccountAdviceFour() {
         System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceFour");
     }
+
+    // create Pointcut for all methods of all class of package controller
+    @Pointcut("execution(* com.guba.springaop.controller.*.*(..))")
+    private void forControllerPackage(){}
 
     // create Pointcut for all methods of all class of package service
     @Pointcut("execution(* com.guba.springaop.service.*.*(..))")
@@ -56,13 +60,13 @@ public class MyDemoLoggingAspect {
     @Pointcut("forServicePackage() && !(setter() || getter())")
     private void forServicePackageNoGetterSetter(){}
 
-    @Before("com.guba.springaop.aspect.MyDemoLoggingAspect.forServicePackage()")
-    public void beforeAddAccountAdviceFive() {
-        System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceFive");
-    }
-
     @Before("com.guba.springaop.aspect.MyDemoLoggingAspect.forServicePackageNoGetterSetter()")
     public void beforeAddAccountAdviceSix() {
         System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceSix");
+    }
+
+    @Before("com.guba.springaop.aspect.MyDemoLoggingAspect.forControllerPackage()")
+    public void beforeAddAccountAdviceSeven() {
+        System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceSeven");
     }
 }

@@ -17,4 +17,8 @@ public class MembershipService {
         System.out.println(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP ThingMember\n");
         return false;
     }
+
+    public void filterMembershipService() {
+        System.out.println(getClass() + ": DOING STUFF: findMembershipService\n");
+    }
 }
