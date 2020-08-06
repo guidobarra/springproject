@@ -40,32 +40,12 @@ public class MyDemoLoggingAspect {
         System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceFour");
     }
 
-    // create Pointcut for all methods of all class of package controller
-    @Pointcut("execution(* com.guba.springaop.controller.*.*(..))")
-    private void forControllerPackage(){}
-
-    // create Pointcut for all methods of all class of package service
-    @Pointcut("execution(* com.guba.springaop.service.*.*(..))")
-    private void forServicePackage(){}
-
-    // create Pointcut for getter methods
-    @Pointcut("execution(* com.guba.springaop.service.*.get*(..))")
-    private void getter(){}
-
-    // create Pointcut for setter methods
-    @Pointcut("execution(* com.guba.springaop.service.*.set*(..))")
-    private void setter(){}
-
-    // combine Pointcut: include package and exclude getter and setter
-    @Pointcut("forServicePackage() && !(setter() || getter())")
-    private void forServicePackageNoGetterSetter(){}
-
-    @Before("com.guba.springaop.aspect.MyDemoLoggingAspect.forServicePackageNoGetterSetter()")
+    @Before("com.guba.springaop.config.PointcutDeclarationConfig.forServicePackageNoGetterSetter()")
     public void beforeAddAccountAdviceSix() {
         System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceSix");
     }
 
-    @Before("com.guba.springaop.aspect.MyDemoLoggingAspect.forControllerPackage()")
+    @Before("com.guba.springaop.config.PointcutDeclarationConfig.forControllerPackage()")
     public void beforeAddAccountAdviceSeven() {
         System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceSeven");
     }
