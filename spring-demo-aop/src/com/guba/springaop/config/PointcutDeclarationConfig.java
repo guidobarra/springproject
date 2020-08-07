@@ -31,7 +31,11 @@ public class PointcutDeclarationConfig {
     @Pointcut("execution(* com.guba.springaop.dao.MembershipDAO.addSillyMember(..))")
     public void onlyMethodAddSillyMember(){}
 
-    // create Pointcut for only methods addSillyMember of class MembershipDAO
+    // create Pointcut for only methods getAccounts of class AccountDAO
     @Pointcut("execution(* com.guba.springaop.dao.AccountDAO.getAccounts(..))")
     public void onlyMethodGetAccounts(){}
+
+    // create Pointcut for only methods findAccounts of class AccountDAO
+    @Pointcut("execution(* com.guba.springaop.dao.AccountDAO.findAccounts(..))")
+    public void afterExampleThrowing(){}
 }

@@ -3,9 +3,11 @@ package com.guba.springaop.aspect;
 import com.guba.springaop.domain.Account;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.lang.reflect.Pointcut;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -90,4 +92,17 @@ public class MyDemoLoggingAspect {
             myVarResult.get(0).setName("Kioshi");
         }
     }
+
+    @AfterThrowing(
+            pointcut = "com.guba.springaop.config.PointcutDeclarationConfig.afterExampleThrowing()",
+            throwing = "myExc")
+    public void afterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable myExc) {
+        // print out which method we are advising on
+        String method = joinPoint.getSignature().toShortString();
+        System.out.println("\n=====>>> Executing @AfterThrowing on method: " + method);
+
+        // log the exception
+        System.out.println("\n=====>>> The exception is: " + myExc);
+    }
+
 }
