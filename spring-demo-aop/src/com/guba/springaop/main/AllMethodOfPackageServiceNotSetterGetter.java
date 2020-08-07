@@ -1,4 +1,4 @@
-package com.guba.spring;
+package com.guba.springaop.main;
 
 import com.guba.springaop.config.DemoConfig;
 import com.guba.springaop.domain.Account;

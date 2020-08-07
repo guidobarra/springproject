@@ -2,10 +2,7 @@ package com.guba.springaop.aspect;
 
 import com.guba.springaop.domain.Account;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.aspectj.lang.reflect.Pointcut;
 import org.springframework.stereotype.Component;
@@ -76,6 +73,7 @@ public class MyDemoLoggingAspect {
         }
     }
 
+    // if successful
     @AfterReturning(
             pointcut = "com.guba.springaop.config.PointcutDeclarationConfig.onlyMethodGetAccounts()",
             returning = "myVarResult")
@@ -93,6 +91,7 @@ public class MyDemoLoggingAspect {
         }
     }
 
+    // if Throwing
     @AfterThrowing(
             pointcut = "com.guba.springaop.config.PointcutDeclarationConfig.afterExampleThrowing()",
             throwing = "myExc")
@@ -105,4 +104,14 @@ public class MyDemoLoggingAspect {
         System.out.println("\n=====>>> The exception is: " + myExc);
     }
 
+    // if Throwing (failure) or if successful
+    @After("com.guba.springaop.config.PointcutDeclarationConfig.afterExampleFinally()")
+    public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint) {
+        // print out which method we are advising on
+        String method = joinPoint.getSignature().toShortString();
+        System.out.println("\n=====>>> Executing @After finally on method: " + method);
+
+        // log the exception
+        //System.out.println("\n=====>>> The exception is: " );
+    }
 }

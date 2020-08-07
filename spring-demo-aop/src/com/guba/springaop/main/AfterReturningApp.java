@@ -1,15 +1,15 @@
-package com.guba.spring;
+package com.guba.springaop.main;
 
 import com.guba.springaop.config.DemoConfig;
-import com.guba.springaop.controller.AccountController;
 import com.guba.springaop.dao.AccountDAO;
-import com.guba.springaop.dao.MembershipDAO;
 import com.guba.springaop.domain.Account;
 import com.guba.springaop.service.AccountService;
 import com.guba.springaop.service.MembershipService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class OrderAspectApp {
+import java.util.List;
+
+public class AfterReturningApp {
 
     public static void main(String[] args) {
 
@@ -18,19 +18,12 @@ public class OrderAspectApp {
                 new AnnotationConfigApplicationContext(DemoConfig.class);
 
         // get accountService the bean from spring container
-        AccountService accountService = context.getBean("accountService", AccountService.class);
-
-        // get membershipService bean from spring container
-        MembershipService membershipService = context.getBean("membershipService", MembershipService.class);
+        AccountDAO accountDAO = context.getBean("accountDAO", AccountDAO.class);
 
         // call the business method of accountService
-        accountService.findAccount();
-
-        System.out.println("\n let's call it again!\n");
-
-        // call the business method of accountService again
-        accountService.findAccountParameter(new Account("name","level"), false);
-
+        List<Account> accounts = accountDAO.getAccounts();
+        // print out the myVarResult of the method call
+        System.out.println("\nResult Modified: " + accounts);
         // close the context
         context.close();
     }

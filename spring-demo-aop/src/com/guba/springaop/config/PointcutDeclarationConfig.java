@@ -38,4 +38,8 @@ public class PointcutDeclarationConfig {
     // create Pointcut for only methods findAccounts of class AccountDAO
     @Pointcut("execution(* com.guba.springaop.dao.AccountDAO.findAccounts(..))")
     public void afterExampleThrowing(){}
+
+    // create Pointcut for only methods mapReduceAccounts of class AccountDAO
+    @Pointcut("execution(* com.guba.springaop.dao.AccountDAO.mapReduceAccounts(..))")
+    public void afterExampleFinally(){}
 }

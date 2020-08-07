@@ -1,11 +1,13 @@
-package com.guba.spring;
+package com.guba.springaop.main;
 
 import com.guba.springaop.config.DemoConfig;
+import com.guba.springaop.controller.AccountController;
 import com.guba.springaop.dao.AccountDAO;
 import com.guba.springaop.dao.MembershipDAO;
+import com.guba.springaop.service.MembershipService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class OnlyMethodAddAccountOfAccountDAO {
+public class StartNameMethodWithFilterApp {
 
     public static void main(String[] args) {
 
@@ -19,24 +21,25 @@ public class OnlyMethodAddAccountOfAccountDAO {
         // get membershipDAO bean from spring container
         MembershipDAO theMembershipDAO = context.getBean("membershipDAO", MembershipDAO.class);
 
+        // get membershipDAO bean from spring container
+        AccountController accountController = context.getBean("accountController", AccountController.class);
+
         // call the business method of accountDAO
-        theAccountDAO.addAccount();
-
-        System.out.println("\n let's call it again!\n");
-
-        // call the business method of accountDAO again
-        theAccountDAO.addAccount();
+        theAccountDAO.filterAccountDAO();
 
         System.out.println("\n let's call it again!\n");
 
         // call the business method of membershipDAO
-        theMembershipDAO.addAccount();
+        theMembershipDAO.filterMembership();
 
-        System.out.println("\n let's  no call it again!\n");
+        System.out.println("\n let's call it again!\n");
 
         // call the business method of membershipDAO again
-        theMembershipDAO.addAccount();
+        accountController.filterAccountController();
 
+        System.out.println("\n let's no call it again!\n");
+        theAccountDAO.noCallMethodsAspect();
+        theMembershipDAO.noCallMethodsAspect();
         // close the context
         context.close();
     }

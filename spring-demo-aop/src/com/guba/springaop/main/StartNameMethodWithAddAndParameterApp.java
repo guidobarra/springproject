@@ -1,11 +1,12 @@
-package com.guba.spring;
+package com.guba.springaop.main;
 
 import com.guba.springaop.config.DemoConfig;
 import com.guba.springaop.dao.AccountDAO;
 import com.guba.springaop.dao.MembershipDAO;
+import com.guba.springaop.domain.Account;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class JointPointArgumentApp {
+public class StartNameMethodWithAddAndParameterApp {
 
     public static void main(String[] args) {
 
@@ -16,10 +17,8 @@ public class JointPointArgumentApp {
         // get accountDAO the bean from spring container
         AccountDAO theAccountDAO = context.getBean("accountDAO", AccountDAO.class);
 
-        // get membershipDAO bean from spring container
-        MembershipDAO theMembershipDAO = context.getBean("membershipDAO", MembershipDAO.class);
-
-        theMembershipDAO.addSillyMember("hello", false);
+        // call the business method of accountDAO
+        theAccountDAO.addAccountParameter(new Account("name", "2"), false);
 
         // close the context
         context.close();

@@ -61,4 +61,27 @@ public class AccountDAO {
 
         return myAccounts;
     }
+
+    public List<Account> mapReduceAccounts(boolean tripWire) throws RuntimeException {
+
+        // for academic purpose ... simulate an exception
+        if (tripWire) {
+            throw new RuntimeException("No soup for you!!!");
+        }
+
+        List<Account> myAccounts = new ArrayList<>();
+
+        // create sample accounts
+        Account temp1 = new Account("John", "Silver");
+        Account temp2 = new Account("Madhu", "Platinum");
+        Account temp3 = new Account("Luca", "Gold");
+
+        // add them to our accounts list
+        myAccounts.add(temp1);
+        myAccounts.add(temp2);
+        myAccounts.add(temp3);
+
+
+        return myAccounts;
+    }
 }
