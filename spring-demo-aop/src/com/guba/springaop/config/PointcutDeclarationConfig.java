@@ -27,7 +27,11 @@ public class PointcutDeclarationConfig {
     @Pointcut("forServicePackage() && !(setter() || getter())")
     public void forServicePackageNoGetterSetter(){}
 
-    // create Pointcut for all methods of all class of package controller
+    // create Pointcut for only methods addSillyMember of class MembershipDAO
     @Pointcut("execution(* com.guba.springaop.dao.MembershipDAO.addSillyMember(..))")
     public void onlyMethodAddSillyMember(){}
+
+    // create Pointcut for only methods addSillyMember of class MembershipDAO
+    @Pointcut("execution(* com.guba.springaop.dao.AccountDAO.getAccounts(..))")
+    public void onlyMethodGetAccounts(){}
 }

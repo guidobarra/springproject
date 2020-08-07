@@ -3,6 +3,9 @@ package com.guba.springaop.dao;
 import com.guba.springaop.domain.Account;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class AccountDAO {
 
@@ -25,5 +28,14 @@ public class AccountDAO {
 
     public void noCallMethodsAspect() {
         System.out.println("\n\n" + getClass() + ": DOING MY DB WORK: noCallMethodsAspect\n");
+    }
+
+    public List<Account> getAccounts() {
+        System.out.println("\n\n" + getClass() + ": DOING MY DB WORK: getAccounts\n");
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(new Account("Pepe", "Two"));
+        accounts.add(new Account("Lucia", "Tree"));
+        System.out.println(getClass() + " List: " + accounts+ "\n");
+        return  accounts;
     }
 }

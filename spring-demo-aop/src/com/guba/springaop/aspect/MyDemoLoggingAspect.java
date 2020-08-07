@@ -1,10 +1,14 @@
 package com.guba.springaop.aspect;
 
+import com.guba.springaop.domain.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 // Spring AOP using to AspectJ
 @Aspect
@@ -67,6 +71,23 @@ public class MyDemoLoggingAspect {
             if (arg instanceof String) {
                 System.out.println("\n"+arg);
             }
+        }
+    }
+
+    @AfterReturning(
+            pointcut = "com.guba.springaop.config.PointcutDeclarationConfig.onlyMethodGetAccounts()",
+            returning = "myVarResult")
+    public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> myVarResult) {
+        System.out.println("\n=====> Executing @Before advice on afterReturningFindAccountsAdvice");
+
+        // print out which method we are advising on
+        String nameMethod =  joinPoint.getSignature().toShortString();
+
+        System.out.println("\n=====> Executing @Before nameMethod: " + nameMethod);
+
+        // modified
+        if (!myVarResult.isEmpty()) {
+            myVarResult.get(0).setName("Kioshi");
         }
     }
 }
