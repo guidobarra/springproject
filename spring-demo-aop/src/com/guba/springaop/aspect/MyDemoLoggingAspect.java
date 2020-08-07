@@ -1,8 +1,9 @@
 package com.guba.springaop.aspect;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 // Spring AOP using to AspectJ
@@ -16,7 +17,7 @@ public class MyDemoLoggingAspect {
 
     // Only method of AccountDAO and not method of MembershipDAO
     @Before("execution(public void com.guba.springaop.dao.AccountDAO.addAccount())")
-    public void beforeAddAccountAdvice() {
+    public void beforeAddAccountAdvice() { // Joint Point
         System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdvice");
     }
 
@@ -48,5 +49,24 @@ public class MyDemoLoggingAspect {
     @Before("com.guba.springaop.config.PointcutDeclarationConfig.forControllerPackage()")
     public void beforeAddAccountAdviceSeven() {
         System.out.println("\n=====> Executing @Before advice on beforeAddAccountAdviceSeven");
+    }
+
+    @Before("com.guba.springaop.config.PointcutDeclarationConfig.onlyMethodAddSillyMember()")
+    public void beforeAddSillyMember(JoinPoint joinPoint) {
+        System.out.println("\n=====> Executing @Before advice on beforeAddSillyMember");
+
+        // display the method signature
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+
+        System.out.println("\n=====> Executing @Before methodSignature: " + methodSignature);
+
+        // display method arguments
+        Object[] args = joinPoint.getArgs();
+
+        for (Object arg: args) {
+            if (arg instanceof String) {
+                System.out.println("\n"+arg);
+            }
+        }
     }
 }
