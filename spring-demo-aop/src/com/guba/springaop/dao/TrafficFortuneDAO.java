@@ -30,4 +30,13 @@ public class TrafficFortuneDAO {
 
         return "Expect heavy traffic this morning";
     }
+
+    public String getFortune(Boolean tripWire) {
+
+        if (tripWire) {
+            throw new RuntimeException("Major accident! Highway is closed");
+        }
+
+        return "Expect heavy traffic this morning";
+    }
 }

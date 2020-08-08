@@ -50,4 +50,8 @@ public class PointcutDeclarationConfig {
     // create Pointcut for only methods getFortune of class AccountDAO, parameter boolean
     @Pointcut("execution(* com.guba.springaop.dao.TrafficFortuneDAO.getFortune(boolean))")
     public void aroundExceptionExample(){}
+
+    // create Pointcut for only methods getFortune of class AccountDAO, parameter boolean
+    @Pointcut("execution(* com.guba.springaop.dao.TrafficFortuneDAO.getFortune(Boolean))")
+    public void aroundExceptionExample2(){}
 }
