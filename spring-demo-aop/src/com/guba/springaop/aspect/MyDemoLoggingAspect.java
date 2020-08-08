@@ -138,7 +138,7 @@ public class MyDemoLoggingAspect {
     }
 
     @Around("com.guba.springaop.config.PointcutDeclarationConfig.aroundExceptionExample()")
-    public Object afterGetFortuneParameter(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    public Object afterGetFortuneParameterBoolean(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         // get begin timestamp
         long begin = System.currentTimeMillis();
@@ -154,6 +154,9 @@ public class MyDemoLoggingAspect {
             // give user a custom message
             result = "Major accident! But no worries, " +
                     "your private AOP helicopter is on the way!";
+
+            // rethrow exception,
+            //throw e;
         }
 
 
@@ -167,5 +170,32 @@ public class MyDemoLoggingAspect {
         return result;
     }
 
+    @Around("com.guba.springaop.config.PointcutDeclarationConfig.aroundExceptionExample2()")
+    public Object afterGetFortuneParameterInteger(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
+        // get begin timestamp
+        long begin = System.currentTimeMillis();
+
+        // now, let's execute the method
+        Object result = null;
+        try {
+            result = proceedingJoinPoint.proceed();
+        } catch (Exception e) {
+            // log the exception
+            LOGGER.warning(e.getMessage());
+
+            // rethrow exception, the main driving exception
+            throw e;
+        }
+
+
+        // get end timestamp
+        long end = System.currentTimeMillis();
+
+        // compute duration and display it
+        long duration = end - begin;
+        LOGGER.info("\n=====>>> Executing: @Around on method: " + proceedingJoinPoint.toString());
+        LOGGER.info("\n=====>>> duration: " + duration + " milliseconds");
+        return result;
+    }
 }
