@@ -3,43 +3,47 @@ package com.guba.springaop.service;
 import com.guba.springaop.domain.Account;
 import org.springframework.stereotype.Service;
 
+import java.util.logging.Logger;
+
 @Service
 public class AccountService {
 
+    private final Logger LOGGER = Logger.getLogger(getClass().getName());
+    
     private String name;
 
     private String pass;
 
     public void findAccount() {
-        System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN findAccount\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: ADDING AN findAccount\n");
     }
 
     public String findAccountString() {
-        System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN findAccountString\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: ADDING AN findAccountString\n");
         return "GUBA";
     }
 
     public void findAccountParameter(Account account, boolean b) {
-        System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN findAccountParameter\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: ADDING AN findAccountParameter\n");
     }
 
     public String getName() {
-        System.out.println(getClass() + ": getName\n");
+        LOGGER.info(getClass() + ": getName\n");
         return name;
     }
 
     public String getPass() {
-        System.out.println(getClass() + ": getPass\n");
+        LOGGER.info(getClass() + ": getPass\n");
         return pass;
     }
 
     public void setName(String name) {
-        System.out.println(getClass() + ": setName\n");
+        LOGGER.info(getClass() + ": setName\n");
         this.name = name;
     }
 
     public void setPass(String pass) {
-        System.out.println(getClass() + ": setPass\n");
+        LOGGER.info(getClass() + ": setPass\n");
         this.pass = pass;
     }
 }

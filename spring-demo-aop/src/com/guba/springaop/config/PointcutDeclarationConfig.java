@@ -42,4 +42,12 @@ public class PointcutDeclarationConfig {
     // create Pointcut for only methods mapReduceAccounts of class AccountDAO
     @Pointcut("execution(* com.guba.springaop.dao.AccountDAO.mapReduceAccounts(..))")
     public void afterExampleFinally(){}
+
+    // create Pointcut for only methods getFortune of class AccountDAO, no parameter
+    @Pointcut("execution(* com.guba.springaop.dao.TrafficFortuneDAO.getFortune())")
+    public void aroundExample(){}
+
+    // create Pointcut for only methods getFortune of class AccountDAO, parameter boolean
+    @Pointcut("execution(* com.guba.springaop.dao.TrafficFortuneDAO.getFortune(boolean))")
+    public void aroundExceptionExample(){}
 }

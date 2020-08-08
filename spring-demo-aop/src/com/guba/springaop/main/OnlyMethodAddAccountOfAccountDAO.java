@@ -5,7 +5,11 @@ import com.guba.springaop.dao.AccountDAO;
 import com.guba.springaop.dao.MembershipDAO;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.logging.Logger;
+
 public class OnlyMethodAddAccountOfAccountDAO {
+
+    private static final Logger LOGGER = Logger.getLogger(OnlyMethodAddAccountOfAccountDAO.class.getName());
 
     public static void main(String[] args) {
 
@@ -22,17 +26,17 @@ public class OnlyMethodAddAccountOfAccountDAO {
         // call the business method of accountDAO
         theAccountDAO.addAccount();
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of accountDAO again
         theAccountDAO.addAccount();
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of membershipDAO
         theMembershipDAO.addAccount();
 
-        System.out.println("\n let's  no call it again!\n");
+        LOGGER.info("\n let's  no call it again!\n");
 
         // call the business method of membershipDAO again
         theMembershipDAO.addAccount();

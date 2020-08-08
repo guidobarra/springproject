@@ -6,9 +6,12 @@ import com.guba.springaop.domain.Account;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class AfterThrowingApp {
 
+    private static final Logger LOGGER = Logger.getLogger(AfterThrowingApp.class.getName());
+    
     public static void main(String[] args) {
 
         // read spring config java class
@@ -27,16 +30,16 @@ public class AfterThrowingApp {
             theAccounts = theAccountDAO.findAccounts(tripWire);
         }
         catch (Exception exc) {
-            System.out.println("\n\nMain Program ... caught exception: " + exc);
+            LOGGER.info("\n\nMain Program ... caught exception: " + exc);
         }
 
         // display the accounts
-        System.out.println("\n\nMain Program: AfterThrowingDemoApp");
-        System.out.println("----");
+        LOGGER.info("\n\nMain Program: AfterThrowingDemoApp");
+        LOGGER.info("----");
 
-        System.out.println(theAccounts);
+        LOGGER.info(theAccounts.toString());
 
-        System.out.println("\n");
+        LOGGER.info("\n");
 
         // close the context
         context.close();

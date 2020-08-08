@@ -6,7 +6,12 @@ import com.guba.springaop.service.AccountService;
 import com.guba.springaop.service.MembershipService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.logging.Logger;
+
 public class AllMethodOfPackageServiceNotSetterGetter {
+
+    private static final Logger LOGGER = Logger.getLogger(AllMethodOfPackageServiceNotSetterGetter.class.getName());
+    
     public static void main(String[] args) {
 
         // read spring config java class
@@ -22,17 +27,17 @@ public class AllMethodOfPackageServiceNotSetterGetter {
         // call the business method of accountService
         accountService.findAccount();
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of accountService again
         accountService.findAccountParameter(new Account("name","level"), false);
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of accountService get
         accountService.getPass();
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of accountService set
         accountService.setPass("asd");

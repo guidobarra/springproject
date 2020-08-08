@@ -5,9 +5,13 @@ import com.guba.springaop.dao.AccountDAO;
 import com.guba.springaop.domain.Account;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class AfterFinallyApp {
+
+    private static final Logger LOGGER = Logger.getLogger(AfterFinallyApp.class.getName());
 
     public static void main(String[] args) {
 
@@ -19,7 +23,7 @@ public class AfterFinallyApp {
         AccountDAO theAccountDAO = context.getBean("accountDAO", AccountDAO.class);
 
         // call method to find the accounts
-        List<Account> theAccounts = null;
+        List<Account> theAccounts = new ArrayList<>();
 
         try {
             // add a boolean flag to simulate exceptions
@@ -27,16 +31,16 @@ public class AfterFinallyApp {
             theAccounts = theAccountDAO.mapReduceAccounts(tripWire);
         }
         catch (Exception exc) {
-            System.out.println("\n\nMain Program ... caught exception: " + exc);
+            LOGGER.info("\n\nMain Program ... caught exception: " + exc);
         }
 
         // display the accounts
-        System.out.println("\n\nMain Program: AfterThrowingDemoApp");
-        System.out.println("----");
+        LOGGER.info("\n\nMain Program: AfterThrowingDemoApp");
+        LOGGER.info("----");
 
-        System.out.println(theAccounts);
+        LOGGER.info(theAccounts.toString());
 
-        System.out.println("\n");
+        LOGGER.info("\n");
 
         // close the context
         context.close();

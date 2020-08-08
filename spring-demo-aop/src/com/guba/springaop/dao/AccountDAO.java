@@ -5,37 +5,40 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Component
 public class AccountDAO {
 
+    private final Logger LOGGER = Logger.getLogger(getClass().getName());
+    
     public void addAccount() {
-        System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN ACCOUNT\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: ADDING AN ACCOUNT\n");
     }
 
     public String addAccountString() {
-        System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN addAccountString\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: ADDING AN addAccountString\n");
         return "GUBA";
     }
 
     public void addAccountParameter(Account account, boolean b) {
-        System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN addAccountParameter\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: ADDING AN addAccountParameter\n");
     }
 
     public void filterAccountDAO() {
-        System.out.println(getClass() + ": DOING MY DB WORK: filterAccountDAO\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: filterAccountDAO\n");
     }
 
     public void noCallMethodsAspect() {
-        System.out.println("\n\n" + getClass() + ": DOING MY DB WORK: noCallMethodsAspect\n");
+        LOGGER.info("\n\n" + getClass() + ": DOING MY DB WORK: noCallMethodsAspect\n");
     }
 
     public List<Account> getAccounts() {
-        System.out.println("\n\n" + getClass() + ": DOING MY DB WORK: getAccounts\n");
+        LOGGER.info("\n\n" + getClass() + ": DOING MY DB WORK: getAccounts\n");
         List<Account> accounts = new ArrayList<>();
         accounts.add(new Account("Pepe", "Two"));
         accounts.add(new Account("Lucia", "Tree"));
-        System.out.println(getClass() + " List: " + accounts+ "\n");
+        LOGGER.info(getClass() + " List: " + accounts+ "\n");
         return  accounts;
     }
 

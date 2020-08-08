@@ -5,7 +5,11 @@ import com.guba.springaop.dao.AccountDAO;
 import com.guba.springaop.dao.MembershipDAO;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.logging.Logger;
+
 public class StartNameMethodWithAddAndReturnBooleanApp {
+
+    private static final Logger LOGGER = Logger.getLogger(StartNameMethodWithAddAndReturnBooleanApp.class.getName());
 
     public static void main(String[] args) {
 
@@ -22,7 +26,7 @@ public class StartNameMethodWithAddAndReturnBooleanApp {
         // call the business method of accountDAO
         theAccountDAO.addAccountString();
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of membershipDAO again
         theMembershipDAO.addThingMember();

@@ -6,7 +6,11 @@ import com.guba.springaop.dao.MembershipDAO;
 import com.guba.springaop.domain.Account;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.logging.Logger;
+
 public class StartNameMethodWithAddAndParameterApp {
+
+    private static final Logger LOGGER = Logger.getLogger(StartNameMethodWithAddAndParameterApp.class.getName());
 
     public static void main(String[] args) {
 

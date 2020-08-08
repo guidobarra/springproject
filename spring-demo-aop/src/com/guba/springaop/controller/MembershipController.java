@@ -2,26 +2,30 @@ package com.guba.springaop.controller;
 
 import org.springframework.stereotype.Controller;
 
+import java.util.logging.Logger;
+
 @Controller
 public class MembershipController {
 
+    private final Logger LOGGER = Logger.getLogger(getClass().getName());
+    
     String status;
 
     public void filterMembershipController() {
-        System.out.println(getClass() + ": DOING MY DB WORK: filterAccountController\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: filterAccountController\n");
     }
 
     public void findMembershipController() {
-        System.out.println(getClass() + ": DOING MY DB WORK: findMembershipController\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: findMembershipController\n");
     }
 
     public String getStatus() {
-        System.out.println(getClass() + ": DOING MY DB WORK: getStatus\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: getStatus\n");
         return status;
     }
 
     public void setStatus(String status) {
-        System.out.println(getClass() + ": DOING MY DB WORK: setStatus\n");
+        LOGGER.info(getClass() + ": DOING MY DB WORK: setStatus\n");
         this.status = status;
     }
 }

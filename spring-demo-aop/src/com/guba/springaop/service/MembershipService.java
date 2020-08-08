@@ -2,23 +2,27 @@ package com.guba.springaop.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.logging.Logger;
+
 @Service
 public class MembershipService {
 
+    private final Logger LOGGER = Logger.getLogger(getClass().getName());
+    
     public void findAccount() {
-        System.out.println(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP findAccount\n");
+        LOGGER.info(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP findAccount\n");
     }
 
     public void findSillyMember() {
-        System.out.println(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP findSillyMember\n");
+        LOGGER.info(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP findSillyMember\n");
     }
 
     public boolean findThingMember() {
-        System.out.println(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP ThingMember\n");
+        LOGGER.info(getClass() + ": DOING STUFF: ADDING A MEMBERSHIP ThingMember\n");
         return false;
     }
 
     public void filterMembershipService() {
-        System.out.println(getClass() + ": DOING STUFF: findMembershipService\n");
+        LOGGER.info(getClass() + ": DOING STUFF: findMembershipService\n");
     }
 }

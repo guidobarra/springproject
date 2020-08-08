@@ -7,8 +7,12 @@ import com.guba.springaop.dao.MembershipDAO;
 import com.guba.springaop.service.MembershipService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.logging.Logger;
+
 public class StartNameMethodWithFilterApp {
 
+    private static final Logger LOGGER = Logger.getLogger(StartNameMethodWithFilterApp.class.getName());
+    
     public static void main(String[] args) {
 
         // read spring config java class
@@ -27,17 +31,17 @@ public class StartNameMethodWithFilterApp {
         // call the business method of accountDAO
         theAccountDAO.filterAccountDAO();
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of membershipDAO
         theMembershipDAO.filterMembership();
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of membershipDAO again
         accountController.filterAccountController();
 
-        System.out.println("\n let's no call it again!\n");
+        LOGGER.info("\n let's no call it again!\n");
         theAccountDAO.noCallMethodsAspect();
         theMembershipDAO.noCallMethodsAspect();
         // close the context

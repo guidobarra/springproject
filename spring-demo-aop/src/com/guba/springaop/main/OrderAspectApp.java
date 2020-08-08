@@ -9,7 +9,11 @@ import com.guba.springaop.service.AccountService;
 import com.guba.springaop.service.MembershipService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.logging.Logger;
+
 public class OrderAspectApp {
+
+    private static final Logger LOGGER = Logger.getLogger(OrderAspectApp.class.getName());
 
     public static void main(String[] args) {
 
@@ -26,7 +30,7 @@ public class OrderAspectApp {
         // call the business method of accountService
         accountService.findAccount();
 
-        System.out.println("\n let's call it again!\n");
+        LOGGER.info("\n let's call it again!\n");
 
         // call the business method of accountService again
         accountService.findAccountParameter(new Account("name","level"), false);
