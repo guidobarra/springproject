@@ -35,3 +35,6 @@ hs_err_pid*
 /web-customer-tracker/.project
 /web-customer-tracker/web-customer-tracker.iml
 /web-customer-tracker/build/classes/.gitignore
+/web-customer-tracker/bin/.gitignore
+/web-customer-tracker-aop/.settings
+/web-customer-tracker-aop/bin/.gitignore
