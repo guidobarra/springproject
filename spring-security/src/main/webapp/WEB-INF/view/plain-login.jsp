@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
 	<title>Custom Login Page</title>
@@ -18,7 +19,7 @@
 
 		<!-- Check for login error -->
 		<c:if test="${param.error != null}">
-			<i class="failed">Sorry! You entered invalid username/password</i>
+			<em class="failed">Sorry! You entered invalid username/password</em>
 		</c:if>
 
 		<p>
