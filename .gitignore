@@ -31,3 +31,4 @@ hs_err_pid*
 
 /spring-security/.idea
 /spring-security/spring-security.iml
+/spring-security/docker/data
