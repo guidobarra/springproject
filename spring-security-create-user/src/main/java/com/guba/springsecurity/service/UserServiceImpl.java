@@ -50,7 +50,32 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(crmUser.getEmail());
 
 		// give user default role of "employee"
-		user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
+		Role roleEmployee = roleDao.findRoleByName("ROLE_EMPLOYEE");
+
+		// the user is always role ROLE_EMPLOYEE o more roles
+		if (crmUser.getFormRole().equals("ROLE_EMPLOYEE")) {
+			user.setRoles(Arrays.asList(roleEmployee));
+		} else {
+			user.setRoles(Arrays.asList(
+					roleEmployee,
+					roleDao.findRoleByName(crmUser.getFormRole())));
+		}
+
+		/**
+		// give user default role of "employee"
+		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList();
+		authorities.add(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+
+		// if the user selected role other than employee
+		// then add that one too (multiple roles)
+		String formRole = theCrmUser.getFormRole();
+		if (!formRole.equals("ROLE_EMPLOYEE")) {
+			authorities.add(new SimpleGrantedAuthority(formRole));
+		}
+
+		// create user object (from Spring Security framework)
+		User tempUser = new User(userName, encodedPassword, authorities);
+		*/
 
 		 // save user in the database
 		userDao.save(user);

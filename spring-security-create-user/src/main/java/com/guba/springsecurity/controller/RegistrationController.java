@@ -1,7 +1,10 @@
 package com.guba.springsecurity.controller;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,18 @@ public class RegistrationController {
 	
     private Logger logger = Logger.getLogger(getClass().getName());
 
+	private Map<String, String> roles;
+	@PostConstruct
+	protected void loadRoles() {
+		// using hashmap, could also read this info from a database
+		roles = new LinkedHashMap<String, String>();
+
+		// key=the role, value=display to user
+		roles.put("ROLE_EMPLOYEE", "Employee");
+		roles.put("ROLE_MANAGER", "Manager");
+		roles.put("ROLE_ADMIN", "Admin");
+	}
+
 	// The @InitBinder is code that we've used before. It is used in the form validation
 	// process. Here we add support to trim empty strings to null.
 	@InitBinder
@@ -43,6 +58,9 @@ public class RegistrationController {
 	public String showMyLoginPage(Model theModel) {
 		
 		theModel.addAttribute("crmUser", new CrmUser());
+
+		// add roles to the model for form display
+		theModel.addAttribute("roles", roles);
 		
 		return "registration-form";
 	}
@@ -55,7 +73,7 @@ public class RegistrationController {
 		
 		String userName = theCrmUser.getUserName();
 		logger.info("Processing registration form for: " + userName);
-		
+
 		// form validation
 		if (theBindingResult.hasErrors()){
 			return "registration-form";
