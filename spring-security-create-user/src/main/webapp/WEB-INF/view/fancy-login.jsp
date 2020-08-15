@@ -87,6 +87,14 @@
 						<input type="hidden"
 							   name="${_csrf.parameterName}"
 							   value="${_csrf.token}"/>
+
+						<div>
+							<a href="${pageContext.request.contextPath}/register/showRegistrationForm"
+							   class="btn btn-primary"
+							   role="button" aria-pressed="true">
+								Register New User
+							</a>
+						</div>
 					</form>
 
 				</div>
