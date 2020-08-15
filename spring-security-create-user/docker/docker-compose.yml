@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  mysql-security:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: springsecurity
+      MYSQL_DATABASE: db_spring_security
+      MYSQL_USER: springsecurity
+      MYSQL_PASSWORD: springsecurity
+    ports:
+      - "3309:3306"
+    volumes:
+      - "./my.conf:/etc/mysql/conf.d/config-file.cnf"
+      - "./data:/var/lib/mysql:rw"
+
+  admin:
+    image: adminer
+    ports:
+      - 8090:8080
