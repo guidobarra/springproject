@@ -47,7 +47,7 @@
 
 	<!-- Add a logout button-->
 	<form:form action="${pageContext.request.contextPath}/logout"
-				mathod="POST">
+				method="POST">
 		<input type="submit" value="Logout"/>
 	</form:form>
 </body>
