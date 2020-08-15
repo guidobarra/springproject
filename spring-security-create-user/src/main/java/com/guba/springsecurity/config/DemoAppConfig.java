@@ -8,7 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -21,6 +23,7 @@ import java.util.logging.Logger;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages="com.guba.springsecurity")
+@EnableTransactionManagement
 @PropertySource("classpath:persistence-mysql.properties")
 public class DemoAppConfig {
 
@@ -29,8 +32,6 @@ public class DemoAppConfig {
 	// for the properties
 	@Autowired
 	private Environment env;
-
-	// define a bean for ViewResolver
 
 	@Bean
 	public ViewResolver viewResolver() {
@@ -96,6 +97,17 @@ public class DemoAppConfig {
 		sessionFactory.setHibernateProperties(getHibernateProperties());
 
 		return sessionFactory;
+	}
+
+	@Bean
+	@Autowired
+	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+
+		// setup transaction manager based on session factory
+		HibernateTransactionManager txManager = new HibernateTransactionManager();
+		txManager.setSessionFactory(sessionFactory);
+
+		return txManager;
 	}
 	
 }

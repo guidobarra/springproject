@@ -1,39 +1,31 @@
 package com.guba.springsecurity.config;
 
+import com.guba.springsecurity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-
-import javax.sql.DataSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // Inject our data source that we just configured in "DemoAppConfig"
+    // add a reference to our security data source
     @Autowired
-    private DataSource securityDataSource;
+    private UserService userService;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        // spring security used table user and authorities for roles, password, read register
-        // No Longer hard-coding users :-)
-        // Tell spring security to use JDBC authentication with our data source
-        auth.jdbcAuthentication().dataSource(securityDataSource);
-
-        /**
-        User.UserBuilder userBuilder = User.withDefaultPasswordEncoder();
-
-        auth.inMemoryAuthentication()
-            .withUser(userBuilder.username("john").password("test123").roles("EMPLOYEE"))
-            .withUser(userBuilder.username("mary").password("test123").roles("EMPLOYEE", "MANAGER"))
-            .withUser(userBuilder.username("susan").password("test123").roles("EMPLOYEE", "ADMIN"));
-         */
+        
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
@@ -47,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .formLogin()
                 .loginPage("/showMyLoginPage")
                 .loginProcessingUrl("/authenticateTheUser")
+                .successHandler(customAuthenticationSuccessHandler)
                 .permitAll()
              .and()
                 .logout()
@@ -54,5 +47,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .and()
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");
+    }
+
+    //bcrypt bean definition
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    //authenticationProvider bean definition
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userService);
+        auth.setPasswordEncoder(passwordEncoder());
+        return auth;
     }
 }
