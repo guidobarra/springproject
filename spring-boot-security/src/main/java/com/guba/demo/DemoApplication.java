@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.guba.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

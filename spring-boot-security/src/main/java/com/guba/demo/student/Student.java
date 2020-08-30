@@ -1,4 +1,4 @@
-package com.example.demo.student;
+package com.guba.demo.student;
 
 public class Student {
 
