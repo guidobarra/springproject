@@ -39,6 +39,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
+        // simulate data base
         UserDetails guidinho = User.builder()
                 .username("guidinho")
                 .password(passwordEncoder.encode("password"))
