@@ -40,11 +40,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected UserDetailsService userDetailsService() {
         // simulate data base
-        UserDetails guidinho = User.builder()
-                .username("guidinho")
-                .password(passwordEncoder.encode("password"))
-                .roles("STUDENT") // is ROLE_STUDENT
+        UserDetails guidinhoUser = createUserDatail("guidinho", "password", "STUDENT");
+
+        UserDetails luciaUser = createUserDatail("lucia", "password123", "ADMIN");
+
+        return new InMemoryUserDetailsManager(guidinhoUser, luciaUser);
+    }
+
+    private UserDetails createUserDatail(String userName,String pass, String role) {
+        return User.builder()
+                .username(userName)
+                .password(passwordEncoder.encode(pass))
+                .roles(role) // is ROLE_STUDENT or ROLE_ADMIN etc
                 .build();
-        return new InMemoryUserDetailsManager(guidinho);
     }
 }
