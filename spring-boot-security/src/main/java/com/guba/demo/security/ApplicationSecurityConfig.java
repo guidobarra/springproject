@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import static com.guba.demo.enums.UserRole.ADMIN;
+import static com.guba.demo.enums.UserRole.STUDENT;
+
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -40,14 +43,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected UserDetailsService userDetailsService() {
         // simulate data base
-        UserDetails guidinhoUser = createUserDatail("guidinho", "password", "STUDENT");
+        UserDetails guidinhoUser = createUserDetail("guidinho", "password", STUDENT.name());
 
-        UserDetails luciaUser = createUserDatail("lucia", "password123", "ADMIN");
+        UserDetails luciaUser = createUserDetail("lucia", "password123", ADMIN.name());
 
         return new InMemoryUserDetailsManager(guidinhoUser, luciaUser);
     }
 
-    private UserDetails createUserDatail(String userName,String pass, String role) {
+    private UserDetails createUserDetail(String userName, String pass, String role) {
         return User.builder()
                 .username(userName)
                 .password(passwordEncoder.encode(pass))
