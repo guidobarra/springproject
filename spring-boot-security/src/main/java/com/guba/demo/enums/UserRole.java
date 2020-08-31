@@ -8,7 +8,8 @@ import java.util.Set;
 
 public enum UserRole {
     STUDENT(Sets.newHashSet()),
-    ADMIN(Sets.newHashSet(STUDENT_READ, COURSE_READ, COURSE_WRITE));
+    ADMIN(Sets.newHashSet(STUDENT_READ, COURSE_READ, COURSE_WRITE)),
+    ADMINTRAINING(Sets.newHashSet(STUDENT_READ, COURSE_READ));
 
     private final Set<UserPermission> permissions;
 

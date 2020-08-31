@@ -1,6 +1,5 @@
 package com.guba.demo.security;
 
-import com.guba.demo.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import static com.guba.demo.enums.UserRole.ADMIN;
-import static com.guba.demo.enums.UserRole.STUDENT;
+import static com.guba.demo.enums.UserRole.*;
 
 @Configuration
 @EnableWebSecurity
@@ -48,7 +46,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
         UserDetails luciaUser = createUserDetail("lucia", "password123", ADMIN.name());
 
-        return new InMemoryUserDetailsManager(guidinhoUser, luciaUser);
+        UserDetails tomUser = createUserDetail("lucia", "password123", ADMINTRAINING.name());
+
+        return new InMemoryUserDetailsManager(
+                guidinhoUser,
+                luciaUser,
+                tomUser);
     }
 
     private UserDetails createUserDetail(String userName, String pass, String role) {
