@@ -1,5 +1,6 @@
-package com.guba.demo.student;
+package com.guba.demo.controller;
 
+import com.guba.demo.domain.Student;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

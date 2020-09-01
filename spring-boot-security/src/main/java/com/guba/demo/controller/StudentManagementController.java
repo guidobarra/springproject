@@ -1,5 +1,6 @@
-package com.guba.demo.student;
+package com.guba.demo.controller;
 
+import com.guba.demo.domain.Student;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 

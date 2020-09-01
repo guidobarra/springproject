@@ -1,27 +1,20 @@
 package com.guba.demo.security;
 
+import com.guba.demo.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static com.guba.demo.enums.UserPermission.COURSE_WRITE;
 import static com.guba.demo.enums.UserRole.*;
 
 @Configuration
@@ -31,9 +24,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserServiceImpl userServiceImpl;
+
     @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder,
+                                     UserServiceImpl userServiceImpl) {
         this.passwordEncoder = passwordEncoder;
+        this.userServiceImpl = userServiceImpl;
     }
 
 
@@ -73,41 +70,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
+
     @Bean
-    protected UserDetailsService userDetailsService() {
-        // simulate data base
-        /**
-        UserDetails guidinhoUser = createUserDetailRole("guidinho", "password", STUDENT.name());
-
-        UserDetails luciaUser = createUserDetailRole("lucia", "password123", ADMIN.name());
-
-        UserDetails tomUser = createUserDetailRole("tom", "password123", ADMINTRAINING.name());
-        */
-        UserDetails guidinhoUser = createUserDetailRoleAndPermissions("guidinho", "password", STUDENT.getGrantedAuthority());
-
-        UserDetails luciaUser = createUserDetailRoleAndPermissions("lucia", "password123", ADMIN.getGrantedAuthority());
-
-        UserDetails tomUser = createUserDetailRoleAndPermissions("tom", "password123", ADMINTRAINING.getGrantedAuthority());
-
-        return new InMemoryUserDetailsManager(
-                guidinhoUser,
-                luciaUser,
-                tomUser);
-    }
-
-    private UserDetails createUserDetailRole(String userName, String pass, String role) {
-        return User.builder()
-                .username(userName)
-                .password(passwordEncoder.encode(pass))
-                .roles(role) // is ROLE_STUDENT or ROLE_ADMIN etc
-                .build();
-    }
-
-    private UserDetails createUserDetailRoleAndPermissions(String userName, String pass, Set<SimpleGrantedAuthority> roleAndPermissions) {
-        return User.builder()
-                .username(userName)
-                .password(passwordEncoder.encode(pass))
-                .authorities(roleAndPermissions) // ROLE_STUDENT and permissions of ROLE_STUDENT etc
-                .build();
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsService(userServiceImpl);
+        return provider;
     }
 }

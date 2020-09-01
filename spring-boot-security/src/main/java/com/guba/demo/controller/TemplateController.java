@@ -1,4 +1,4 @@
-package com.guba.demo.student;
+package com.guba.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
