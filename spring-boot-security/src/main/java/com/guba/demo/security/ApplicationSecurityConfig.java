@@ -1,5 +1,6 @@
 package com.guba.demo.security;
 
+import com.guba.demo.jwt.JwtTokenVerifier;
 import com.guba.demo.jwt.JwtUserAuthenticationFilter;
 import com.guba.demo.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtUserAuthenticationFilter(authenticationManager()))
+                .addFilterAfter(new JwtTokenVerifier(), JwtUserAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/api/**").hasAnyRole(STUDENT.name())
