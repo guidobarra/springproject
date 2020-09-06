@@ -1,5 +1,6 @@
 package com.guba.demo.security;
 
+import com.guba.demo.jwt.JwtConfig;
 import com.guba.demo.jwt.JwtTokenVerifier;
 import com.guba.demo.jwt.JwtUserAuthenticationFilter;
 import com.guba.demo.service.UserServiceImpl;
@@ -16,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.crypto.SecretKey;
 import java.util.concurrent.TimeUnit;
 
 import static com.guba.demo.enums.UserRole.*;
@@ -29,11 +31,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImpl userServiceImpl;
 
+    private final JwtConfig jwtConfig;
+
+    private final SecretKey secretKey;
+
     @Autowired
     public ApplicationSecurityConfig(PasswordEncoder passwordEncoder,
-                                     UserServiceImpl userServiceImpl) {
+                                     UserServiceImpl userServiceImpl,
+                                     JwtConfig jwtConfig,
+                                     SecretKey secretKey) {
         this.passwordEncoder = passwordEncoder;
         this.userServiceImpl = userServiceImpl;
+        this.jwtConfig = jwtConfig;
+        this.secretKey = secretKey;
     }
 
 
@@ -44,8 +54,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtUserAuthenticationFilter(authenticationManager()))
-                .addFilterAfter(new JwtTokenVerifier(), JwtUserAuthenticationFilter.class)
+                .addFilter(new JwtUserAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+                .addFilterAfter(new JwtTokenVerifier(jwtConfig, secretKey), JwtUserAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/api/**").hasAnyRole(STUDENT.name())
